@@ -9,91 +9,41 @@
             // 最も基本的な標準入力の読み込み
             // まず1行目の読み取り
             string readLine = Console.ReadLine();
-            string[] readLine_split = readLine.Split(" ");
+            int numRooms = int.Parse(readLine);
 
-            // 何行何列かを格納(文字列)
-            string Height_string = readLine_split[0];
-            string Width_string = readLine_split[1];
-            string WinterDay_string = readLine_split[2];
+            readLine = Console.ReadLine();
+            string[] readLine_split = readLine.Split(" ");
+            int[] roomCapacity = new int[numRooms];
+
+            // 各部屋の収容可能人数を格納
+            for(int i = 0; i < numRooms; i++)
+            {
+                roomCapacity[i] = int.Parse(readLine_split[i]);
+            }
+
+            readLine = Console.ReadLine();
+            int numQuestion = int.Parse(readLine);
+            int workStartDate = 0;
+            int workEndDate = 0;
+            int maxCapacity = 0;
 
             // 何行何列かを格納(数値列)
-            int Height_int = int.Parse(Height_string);
-            int Width_int = int.Parse(Width_string);
-            int WinterDay_int = int.Parse(WinterDay_string);
-
-            // 開始位置、終了位置の格納
-            int startHeight = 0;
-            int startWidth = 0;
-            int endHeight = 0;
-            int endWidth = 0;
-
-            // 2次元配列を格納
-            int[,] matrix_Main = new int[Height_int, Width_int];
-
-            for(int i = 0; i < Height_int; i++)
-            {
-                for(int j = 0; j < Width_int; j++)
-                {
-                    matrix_Main[i, j] = 0;
-                }
-            }
-            for(int i = 0; i < WinterDay_int; i++)
+            for(int i = 0; i < numQuestion; i++)
             {
                 readLine = Console.ReadLine();
                 readLine_split = readLine.Split(" ");
-                startHeight = int.Parse(readLine_split[0]) - 1;
-                startWidth = int.Parse(readLine_split[1]) - 1;
-                endHeight = int.Parse(readLine_split[2]) - 1;
-                endWidth = int.Parse(readLine_split[3]) - 1;
+                workStartDate = int.Parse(readLine_split[0]) - 1;
+                workEndDate = int.Parse(readLine_split[1]) - 1;
 
-                matrix_Main[startHeight, startWidth] += 1;
-                if(endWidth + 1 < Width_int)
+                for(int j = 0; j < numRooms; j++)
                 {
-                    matrix_Main[startHeight, endWidth + 1] -= 1;
-                }
-                if(endHeight + 1 < Height_int)
-                {
-                    matrix_Main[endHeight + 1, startWidth] -= 1;
-                }
-                if(endHeight + 1 < Height_int && endWidth + 1 < Width_int)
-                {
-                    matrix_Main[endHeight + 1, endWidth + 1] += 1;
-                }
-            }
-
-            // 横方向の累積和を求める
-            for(int i = 0; i < Height_int; i++)
-            {
-                for(int j = 1; j < Width_int; j++)
-                {
-                    matrix_Main[i, j] += matrix_Main[i, j - 1];
-                }
-            }
-
-            // 縦方向の累積和を求める
-            for(int i = 0; i < Width_int; i++)
-            {
-                for(int j = 1; j < Height_int; j++)
-                {
-                    matrix_Main[j, i] += matrix_Main[j - 1, i];
-                }
-            }
-
-            // 問題数の読み取り
-           for(int i = 0; i < Height_int; i++)
-            {
-                for(int j = 0; j < Width_int; j++)
-                {
-                    if(j != Width_int - 1)
+                    if((j >= 0 && j < workStartDate && maxCapacity < roomCapacity[j]) || (j > workEndDate && j < numRooms && maxCapacity < roomCapacity[j]))
                     {
-                        Console.Write($"{matrix_Main[i, j]} ");
-                    }
-                    else
-                    {
-                        Console.Write($"{matrix_Main[i, j]}");
+                        maxCapacity = roomCapacity[j];
                     }
                 }
-                Console.WriteLine();
+                Console.WriteLine(maxCapacity);
+                maxCapacity = 0;
             }
             return 0;
         }
