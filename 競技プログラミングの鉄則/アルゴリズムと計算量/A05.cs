@@ -20,7 +20,7 @@ class Program
         int numCards_int = int.Parse(numCards_string);
         int targetNum_int = int.Parse(targetNum_string);
 
-        // 愚直に3重ループ
+        // 愚直に2重ループ
         for(int i = 1; i < numCards_int + 1; i++)
         {
             for(int j = 1; j < numCards_int + 1; j++)
