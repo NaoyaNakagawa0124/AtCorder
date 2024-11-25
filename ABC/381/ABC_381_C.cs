@@ -3,7 +3,7 @@ class Program
 {
     static int Main()
     {
-        // 部屋数を読み取る
+        // 文字数を読み取る
         int string_length = int.Parse(Console.ReadLine());
         int counter = 1;
         int max = 1;
@@ -21,7 +21,7 @@ class Program
                 while(flag)
                 {
                     j++;
-                    if(i - j < 0 || i + j > string_length)
+                    if(i - j < 0 || i + j > string_length - 1)
                     {
                         flag = false;
                     }
@@ -44,7 +44,10 @@ class Program
                     return 0;
                 }
             }
-            i += j;
+            if(j != 0)
+            {
+                i += 2 * j + 1;
+            }
         }
         Console.WriteLine(max);
         return 0;

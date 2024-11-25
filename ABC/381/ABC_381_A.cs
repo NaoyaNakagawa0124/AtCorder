@@ -3,7 +3,7 @@ class Program
 {
     static int Main()
     {
-        // 部屋数を読み取る
+        // 文字数を読み取る
         int string_length = int.Parse(Console.ReadLine());
 
         if(string_length % 2 == 0)
