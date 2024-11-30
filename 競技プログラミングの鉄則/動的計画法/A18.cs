@@ -7,12 +7,17 @@ class Program
         // 入力の受け取り
         int N = int.Parse(Console.ReadLine());
 
-        int[] stepOne = Array.ConvertAll(Console.ReadLine().Split(), int.Parse);
-        int[] stepTwo = Array.ConvertAll(Console.ReadLine().Split(), int.Parse);
+        int[] numCards = Array.ConvertAll(Console.ReadLine().Split(), int.Parse);
+        int[] targetNumber = Array.ConvertAll(Console.ReadLine().Split(), int.Parse);
 
-        // 最短経路を入れていくリスト
-        List<int> searchList = new List<int>();
+        // まずはその地点までたどり着けるかどうかの2次元配列を用意しよう
+        // この配列は左の要素はi番目の数値について注目し、右にはターゲットナンバーが入る。
+        bool[,] reachableList = new bool[targetNumber, targetNumber]; // 例えばreachableList[i][0]に関しては全てのカードを使用しなければ必ず実現可能。加えて
 
+        for(int i = 0; i < targetNumber; i++)
+        {
+            
+        }
 
         // 各部屋にたどり着くための最短日数の配列を用意
         int[] shortestPathDays = new int[N];
@@ -21,7 +26,7 @@ class Program
 
          // 一個前の部屋を格納する配列
         int[] previousRoom = new int[N];
-        previousRoom[0]  = 0;
+        previousRoom[0]  = -1;
         previousRoom[1] = 0;
         
         // 3部屋目からの計算はここでやる
@@ -31,24 +36,18 @@ class Program
             {
                 shortestPathDays[i] = shortestPathDays[i - 1] + stepOne[i - 1];
                 previousRoom[i] = i - 1;
-                // Console.WriteLine("１個進むほうが早いみたい！");
-                // Console.WriteLine($"previousRoom[{i}]に{i - 1}を代入したよ");
             }
             else
             {
                 shortestPathDays[i] = shortestPathDays[i - 2] + stepTwo[i - 2];
                 previousRoom[i] = i - 2;
-                // Console.WriteLine("2個進むほうが早いみたい！");
-                // Console.WriteLine($"previousRoom[{i}]に{i - 2}を代入したよ");
             }
         }
 
         int counter = N - 1;
-
-        while(counter != 0)
+        while(previousRoom[counter] != -1)
         {
             searchList.Add(counter + 1);
-            // Console.WriteLine("何回回ってる?");
             counter = previousRoom[counter];
         }
         searchList.Add(1);
