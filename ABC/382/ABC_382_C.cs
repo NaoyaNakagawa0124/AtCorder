@@ -49,6 +49,9 @@ class Program
     }
 }
 
+
+//こっちは復習前の実際に取り組んだ時のソースコード
+// ランタイムエラーが出ている
 // using System;
 // using System.Collections.Generic;
 
