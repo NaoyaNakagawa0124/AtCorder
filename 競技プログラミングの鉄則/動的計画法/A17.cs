@@ -21,7 +21,7 @@ class Program
 
          // 一個前の部屋を格納する配列
         int[] previousRoom = new int[N];
-        previousRoom[0]  = -1;
+        previousRoom[0]  = 0;
         previousRoom[1] = 0;
         
         // 3部屋目からの計算はここでやる
@@ -31,18 +31,24 @@ class Program
             {
                 shortestPathDays[i] = shortestPathDays[i - 1] + stepOne[i - 1];
                 previousRoom[i] = i - 1;
+                // Console.WriteLine("１個進むほうが早いみたい！");
+                // Console.WriteLine($"previousRoom[{i}]に{i - 1}を代入したよ");
             }
             else
             {
                 shortestPathDays[i] = shortestPathDays[i - 2] + stepTwo[i - 2];
                 previousRoom[i] = i - 2;
+                // Console.WriteLine("2個進むほうが早いみたい！");
+                // Console.WriteLine($"previousRoom[{i}]に{i - 2}を代入したよ");
             }
         }
 
         int counter = N - 1;
-        while(previousRoom[counter] != -1)
+
+        while(counter != 0)
         {
             searchList.Add(counter + 1);
+            // Console.WriteLine("何回回ってる?");
             counter = previousRoom[counter];
         }
         searchList.Add(1);
