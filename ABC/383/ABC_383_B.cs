@@ -1,6 +1,5 @@
 using System;
 using System.Collections.Generic;
-
 class Program
 {
     static int Main()
@@ -69,11 +68,9 @@ class Program
                 }
             }
         }
-
         Console.Write(Max);
         return 0;
     }
-
     // BFSを用いてカバー範囲をマークする関数
     static void BFS(int startI, int startJ, int D, char[,] grid, bool[,] covered, int Height, int Width)
     {
