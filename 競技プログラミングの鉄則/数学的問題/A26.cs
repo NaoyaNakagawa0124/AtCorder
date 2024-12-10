@@ -44,7 +44,6 @@ class Program
         }
 
         int sqrtMax = (int)Math.Sqrt(max);
-        // ここ結構面白くて、素数かどうかの判定ってルートのNまででいい。
         for (int i = 2; i <= sqrtMax; i++)
         {
             if (isPrime[i])
