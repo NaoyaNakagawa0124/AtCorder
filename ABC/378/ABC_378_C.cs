@@ -5,41 +5,42 @@ class Program
 {
     static void Main()
     {
-        var lines = Console.ReadLine();
-        int numberSequenceLength = int.Parse(lines);
-
-        lines = Console.ReadLine();
-        for(int i = 0; i < numberSequenceLength; i++)
+        int N = int.Parse(Console.ReadLine());
+        int[] quotient = new int[N];
+        int[] remainder = new int[1000000001];
+        string[] readline = Console.ReadLine().Split();
+        for(int i = 0; i < N; i++)
         {
-            var lines = Console.ReadLine();
-            string[] inputs = lines.Split(' ');
-            quotient[i] =  int.Parse(inputs[0]);
-            remainder[i] = int.Parse(inputs[1]);
+            quotient[i] = int.Parse(readline[i]);
         }
-
-        var Question_Pat = Console.ReadLine();
-        arraySize = int.Parse(Question_Pat);
-
-        int Gabage_Type = 0;
-        int Gabage_Day = 0;
-
-        for(int i = 0; i < arraySize; i++)
+        for(int i = 0; i < N; i++)
         {
-            var lines = Console.ReadLine();
-            string[] inputs = lines.Split(' ');
-            Gabage_Type =  int.Parse(inputs[0]);
-            Gabage_Day = int.Parse(inputs[1]);
-
-            int Diff = (Gabage_Day % quotient[Gabage_Type - 1]) - remainder[Gabage_Type - 1];
-            if(Diff > 0)
+            if(remainder[quotient[i]] == 0)
             {
-                Console.WriteLine(Gabage_Day - Diff + quotient[Gabage_Type - 1]);
+                if(i != N - 1)
+                {
+                    Console.Write("-1");
+                    Console.Write(" ");
+                    remainder[quotient[i]] = i + 1;
+                }
+                else
+                {
+                    Console.Write("-1");
+                }
             }
             else
             {
-                Console.WriteLine(Gabage_Day - Diff);
+                if(i != N - 1)
+                {
+                    Console.Write(remainder[quotient[i]]);
+                    Console.Write(" ");
+                    remainder[quotient[i]] = i + 1;
+                }
+                else
+                {
+                    Console.Write(remainder[quotient[i]]);
+                }
             }
-
         }
     }
 }
