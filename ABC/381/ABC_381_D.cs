@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 class Program
 {
     static int Main()
@@ -7,71 +8,74 @@ class Program
         int string_length = int.Parse(Console.ReadLine());
 
         int counter = 0;
-        int max = 0;
+        int ans = 0;
         int j = 0;
-        int k = 0;
         bool flag = true;
-        bool isDuplicate = false;
 
         // 任意の文字列
         string[] target_string = Console.ReadLine().Split();
+        int[] A = new int[string_length];
+        for(int i = 0; i < string_length; i++)
+        {
+            A[i] = int.Parse(target_string[i]);
+        }
+
         for(int i = 0 ; i < string_length - 1; i++)
         {
-            if(target_string[i] == target_string[i + 1])
+            if(A[i] == A[i + 1])
             {
+                //見ているインデックスの数が一緒だった時
                 counter += 2;
-                j = i;
+                j = i + 2;
+
+                // リストに数字を格納する(このリスト内の数字と一致したらそれは1122数列ではなくなる)
+                List<int> Duplicate = new List<int>();
+                Duplicate.Add(A[i]);
+
+                // そこを起点にどこまで1122数列が続くかを探索
                 while(flag)
                 {
-                    k = i;
-                    j = j + 2;
-                    if(j > string_length - 2)
+                    if(j + 1 > string_length - 1)
                     {
-                        flag = false;
-                    }
-                    else if(target_string[j] == target_string[j + 1])
-                    {
-                        while(k < j)
-                        {
-                            if(target_string[k] == target_string[j])
-                            {
-                                isDuplicate = true;
-                                flag = false;
-                            }
-                            k += 2;
-                        }
-                        if(isDuplicate == false)
-                        {
-                            counter += 2;
-                        }
+                        ans = Math.Max(ans, counter);
+                        Console.WriteLine(ans);
+                        return 0;
                     }
                     else
                     {
-                        flag = false;
+                        if(A[j] == A[j + 1])
+                        {
+                            foreach(int num in Duplicate)
+                            {
+                                if(num == A[j])
+                                {
+                                    flag = false;
+                                }
+                            }
+                            if(flag)
+                            {
+                                counter += 2;
+                                Duplicate.Add(A[j]);
+                                j += 2;
+                            }
+                        }
+                        else
+                        {
+                            flag = false;
+                        }
                     }
                 }
             }
-            if(max < counter)
+            ans = Math.Max(ans, counter);
+            if(ans > string_length / 2 || ans > (string_length - i) * 2)
             {
-                max = counter;
-            }
-
-            if(max > string_length / 2 || max > (string_length - i) * 2)
-            {
-                Console.WriteLine(max);
+                Console.WriteLine(ans);
                 return 0;
             }
-
-            if(counter != 0 && counter != 2)
-            {
-                i += counter - 1;
-            }
             flag = true;
-            isDuplicate = false;
             counter = 0;
-            j = 0;
         }
-        Console.WriteLine(max);
+        Console.WriteLine(ans);
         return 0;
     }
 }
