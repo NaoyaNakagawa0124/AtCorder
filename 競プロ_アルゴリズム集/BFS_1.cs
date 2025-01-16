@@ -16,80 +16,81 @@
 using System;
 using System.Collections.Generic;
 
-class ConnectedComponentsDFS
+class Program
 {
-    static bool[] Visited;
-    static List<int>[] AdjacencyList;
-
     static void Main()
     {
-        // 入力の読み込み
-        var tokens = Console.ReadLine().Split();
-        int N = int.Parse(tokens[0]); // 頂点数
-        int M = int.Parse(tokens[1]); // 辺の数
+        // 入力を受け取る
+        string[] firstLine = Console.ReadLine().Split();
+        int vertices = int.Parse(firstLine[0]);
+        int edges = int.Parse(firstLine[1]);
 
-        Graph graph = new Graph(N);
-
-        // M本の辺を読み込む
-        for (int i = 0; i < M; i++)
+        // グラフの隣接リストを作成
+        List<int>[] graph = new List<int>[vertices + 1];
+        for (int i = 0; i <= vertices; i++)
         {
-            tokens = Console.ReadLine().Split();
-            int u = int.Parse(tokens[0]);
-            int v = int.Parse(tokens[1]);
-            graph.AddEdge(u, v);
+            graph[i] = new List<int>();
         }
 
-        // 隣接リストの取得
-        AdjacencyList = graph.AdjacencyList;
-        Visited = new bool[N + 1];
-        int connectedComponents = 0;
-
-        // すべての頂点をチェック
-        for (int i = 1; i <= N; i++)
+        // 辺の情報を入力
+        for (int i = 0; i < edges; i++)
         {
-            if (!Visited[i])
-            {
-                DFS(i);
-                connectedComponents++;
-            }
+            string[] edge = Console.ReadLine().Split();
+            int u = int.Parse(edge[0]);
+            int v = int.Parse(edge[1]);
+            graph[u].Add(v);
+            graph[v].Add(u); // 無向グラフ
         }
+
+        // 始点と終点を入力
+        string[] lastLine = Console.ReadLine().Split();
+        int start = int.Parse(lastLine[0]);
+        int goal = int.Parse(lastLine[1]);
+
+        // BFSで最短経路を計算
+        int shortestPathLength = BFS(graph, start, goal, vertices);
 
         // 結果を出力
-        Console.WriteLine(connectedComponents);
+        Console.WriteLine(shortestPathLength);
     }
 
-    static void DFS(int node)
+    static int BFS(List<int>[] graph, int start, int goal, int vertices)
     {
-        Visited[node] = true;
-
-        foreach (var neighbor in AdjacencyList[node])
+        // 距離配列を用意 (未訪問は -1 とする)
+        int[] distances = new int[vertices + 1];
+        for (int i = 0; i <= vertices; i++)
         {
-            if (!Visited[neighbor])
+            distances[i] = -1;
+        }
+
+        // BFSの初期設定
+        Queue<int> queue = new Queue<int>();
+        queue.Enqueue(start);
+        distances[start] = 0;
+
+        // キューが空になるまで探索
+        while (queue.Count > 0)
+        {
+            int current = queue.Dequeue();
+
+            // 隣接ノードを探索
+            foreach (int neighbor in graph[current])
             {
-                DFS(neighbor);
+                if (distances[neighbor] == -1) // 未訪問のノード
+                {
+                    distances[neighbor] = distances[current] + 1;
+                    queue.Enqueue(neighbor);
+
+                    // 終点に到達したら距離を返す
+                    if (neighbor == goal)
+                    {
+                        return distances[neighbor];
+                    }
+                }
             }
         }
-    }
-}
 
-class Graph
-{
-    public int VertexCount { get; }
-    public List<int>[] AdjacencyList { get; }
-
-    public Graph(int vertexCount)
-    {
-        VertexCount = vertexCount;
-        AdjacencyList = new List<int>[vertexCount + 1]; // 1-based indexing
-        for (int i = 0; i <= vertexCount; i++)
-        {
-            AdjacencyList[i] = new List<int>();
-        }
-    }
-
-    public void AddEdge(int u, int v)
-    {
-        AdjacencyList[u].Add(v);
-        AdjacencyList[v].Add(u);
+        // 終点に到達できない場合
+        return -1;
     }
 }
