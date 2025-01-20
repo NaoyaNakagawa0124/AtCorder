@@ -1,5 +1,5 @@
     // スタックの基本的な使用例
-    //　スタックは先入れ後出しのデータ構造 本を積んでいくイメージ
+    //　スタックは先入れ後出しのデータ構造　本を積んでいくイメージ
     
     using System;
     using System.Collections.Generic;

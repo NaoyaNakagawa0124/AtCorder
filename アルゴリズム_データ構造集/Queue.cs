@@ -1,5 +1,5 @@
-    // スタックの基本的な使用例
-    //　スタックは先入れ後出しのデータ構造 本を積んでいくイメージ
+    // キューの基本的な使用例
+    // キューは先入れ先出しのデータ構造 列に後ろから並んでいくイメージ
     
     using System;
     using System.Collections.Generic;
@@ -9,7 +9,7 @@
         static int Main()
         {
             int Q = int.Parse(Console.ReadLine());
-            Stack<string> stack = new Stack<string>();
+            Queue<string> queue = new Queue<string>();
 
             for (int i = 0; i < Q; i++)
             {
@@ -17,15 +17,15 @@
                 {
                     if(int.Parse(readLine[0]) == 1)
                     {
-                        stack.Push(readLine[1]); // スタックに代入
+                        queue.Enqueue(readLine[1]); // キューに代入
                     }
                     else if(int.Parse(readLine[0]) == 2)
                     {
-                        Console.WriteLine(stack.Peek()); // ここで一番上の値を参照
+                        Console.WriteLine(queue.Peek()); // ここで先頭の値を参照
                     }
                     else if(int.Parse(readLine[0]) == 3)
                     {
-                        stack.Pop(); // スタックから一番上の値を取り出す
+                        queue.Dequeue(); // キューから一番上の値を取り出す
                     }
                 }
             }
