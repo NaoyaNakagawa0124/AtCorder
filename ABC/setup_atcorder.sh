@@ -81,7 +81,7 @@ else
 fi
 
 # C#サンプルコードテンプレート
-CS_TEMPLATE="using System;\nusing System.Collections.Generic;\n\nclass Program\n{\n    static void Main()\n    {\n        string[] readline = Console.ReadLine().Split();\n}\n}\n"
+CS_TEMPLATE="using System;\nusing System.Collections.Generic;\n\nclass Program\n{\n    static void Main()\n    {\n        string[] readline = Console.ReadLine().Split();\n    }\n}\n"
 
 # 問題ごとのファイルを作成
 for PROBLEM in {A..G}; do
