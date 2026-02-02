@@ -1,0 +1,34 @@
+{
+    "version": "2.0.0",
+    "tasks": [
+        {
+            "label": "AtCoder: コンテスト環境作成",
+            "type": "shell",
+            "command": "dotnet",
+            "args": [
+                "run",
+                "--project",
+                "${workspaceFolder}/Tools/ContestSetup.csproj",
+                "${input:contestNumber}"
+            ],
+            "problemMatcher": [],
+            "presentation": {
+                "reveal": "always",
+                "panel": "new",
+                "focus": true
+            },
+            "group": {
+                "kind": "build",
+                "isDefault": false
+            }
+        }
+    ],
+    "inputs": [
+        {
+            "id": "contestNumber",
+            "type": "promptString",
+            "description": "コンテスト番号を入力してください (例: 384)",
+            "default": "384"
+        }
+    ]
+}
